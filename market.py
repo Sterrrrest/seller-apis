@@ -11,6 +11,19 @@ logger = logging.getLogger(__file__)
 
 
 def get_product_list(page, campaign_id, access_token):
+    """
+    Получает список товаров магазина ЯМ
+        Арг: 
+            last_id - str. Изначально пустой, затем принимает id последнего товара
+            campaign_id - id магазина, переменная из окружения
+            access_token - АПИ токен для доступа к АПИ сайта
+
+        Возвращает:
+            Словарь в формате JSON товара
+
+        Пример: 
+            {}
+    """
     endpoint_url = "https://api.partner.market.yandex.ru/"
     headers = {
         "Content-Type": "application/json",
@@ -30,6 +43,19 @@ def get_product_list(page, campaign_id, access_token):
 
 
 def update_stocks(stocks, campaign_id, access_token):
+    """Обновляет остатки
+          Арг:
+            stocks(list) - список из цен товаров
+            campaign_id - id магазина, переменная из окружения
+            access_token - АПИ токен для доступа к АПИ сайта
+            
+          Возвращает:
+            response.json() - dict c обновленными остатками
+
+          Пример: 
+            {} 
+    """
+    
     endpoint_url = "https://api.partner.market.yandex.ru/"
     headers = {
         "Content-Type": "application/json",
@@ -46,6 +72,18 @@ def update_stocks(stocks, campaign_id, access_token):
 
 
 def update_price(prices, campaign_id, access_token):
+    """Обновляет цены товаров
+          Арг:
+            prices(list) - список из цен товаров
+            campaign_id - id магазина, переменная из окружения
+            access_token - АПИ токен для доступа к АПИ сайта
+            
+          Возвращает:
+            response.json() - dict c обновленной ценой
+
+          Пример: 
+            {}            
+    """
     endpoint_url = "https://api.partner.market.yandex.ru/"
     headers = {
         "Content-Type": "application/json",
@@ -62,7 +100,18 @@ def update_price(prices, campaign_id, access_token):
 
 
 def get_offer_ids(campaign_id, market_token):
-    """Получить артикулы товаров Яндекс маркета"""
+    """Получить артикулы товаров Яндекс маркета
+
+        Арг: 
+            campaign_id - id магазина, переменная из окружения
+            access_token - АПИ токен для доступа к АПИ сайта
+
+        Возвращает:
+            list Список из артикулов товаров
+
+        Пример: 
+            {}
+    """
     page = ""
     product_list = []
     while True:
@@ -79,6 +128,28 @@ def get_offer_ids(campaign_id, market_token):
 
 def create_stocks(watch_remnants, offer_ids, warehouse_id):
     # Уберем то, что не загружено в market
+  """Создает словарь с остатками
+  
+          Арг:
+            watch_remnants - dict с количеством остатков на сайте
+            offer_ids - list Список из артикулов товаров
+            
+          Возвращает:
+            stocks - dict с уникальный индетификатор товара (offer_id (string)) , идентификаторром склада(warehouse_id(int))
+
+          Пример: 
+            {
+                "sku": 423423sdfs53,
+                "warehouseId": 43534523,
+                "items": [
+                    {
+                        "count": 0,
+                        "type": "FIT",
+                        "updatedAt": date,
+                    }
+                ],
+            } 
+  """
     stocks = list()
     date = str(datetime.datetime.utcnow().replace(microsecond=0).isoformat() + "Z")
     for watch in watch_remnants:
@@ -123,6 +194,24 @@ def create_stocks(watch_remnants, offer_ids, warehouse_id):
 
 
 def create_prices(watch_remnants, offer_ids):
+    """Собирает цены товаров
+  
+          Арг:
+            watch_remnants - dict с количеством остатков на сайте
+            offer_ids - list Список из артикулов товаров
+            
+          Возвращает:
+            prices - dict с валютой (currency_code), артикулом(offer_id) и ценой товара (price)
+
+          Пример: 
+                "id": "32",
+               "price": {
+                    "value": 4555,
+                    "currencyId": "RUR",
+                },
+            }
+    """
+    
     prices = []
     for watch in watch_remnants:
         if str(watch.get("Код")) in offer_ids:
