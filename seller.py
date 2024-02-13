@@ -15,15 +15,12 @@ def get_product_list(last_id, client_id, seller_token):
     """
     Получить список товаров магазина озон
         Арг: 
-            last_id - str. Изначально пустой, затем принимает id последнего товара
-            client_id - переменная из окружения
-            seller_token - АПИ токен для доступа к АПИ сайта
+            last_id(str) - Изначально пустой, затем принимает id последнего товара
+            client_id(str) - переменная из окружения
+            seller_token(str) - API токен для доступа к сайту
 
         Возвращает:
-            Словарь в формате JSON товара
-
-        Пример: 
-            {}
+            JSON товаров магазина
   """
   
     url = "https://api-seller.ozon.ru/v2/product/list"
@@ -46,14 +43,11 @@ def get_product_list(last_id, client_id, seller_token):
 def get_offer_ids(client_id, seller_token):
     """Получает артикулы товаров магазина озон
       Арг: 
-            client_id - переменная из окружения
-            seller_token - АПИ токен для доступа к АПИ сайта
+            client_id(str) - переменная из окружения
+            seller_token(str) - API токен для доступа к сайтy
 
         Возвращает:
-            list Список из артикулов товаров
-
-        Пример: 
-            {}
+            Список(list) из артикулов товаров
     """
     last_id = ""
     product_list = []
@@ -73,14 +67,11 @@ def update_price(prices: list, client_id, seller_token):
     """Обновляет цены товаров
           Арг:
             prices(list) - список из цен товаров
-            client_id - переменная из окружения
-            seller_token - АПИ токен для доступа к АПИ сайта
+            client_id(str) - переменная из окружения
+            seller_token(str) - API токен для доступа к сайтy
             
           Возвращает:
-            response.json() - dict c обновленной ценой
-
-          Пример: 
-            {}            
+            Словарь(dict) c обновленной ценой           
     """
     url = "https://api-seller.ozon.ru/v1/product/import/prices"
     headers = {
@@ -96,14 +87,11 @@ def update_stocks(stocks: list, client_id, seller_token):
     """Обновляет остатки
           Арг:
             stocks(list) - список из цен товаров
-            client_id - переменная из окружения
-            seller_token - АПИ токен для доступа к АПИ сайта
+            client_id(str) - переменная из окружения
+            seller_token(str) - API токен для доступа к cайтy
             
-          Возвращает:
-            response.json() - dict c обновленными остатками
-
-          Пример: 
-            {} 
+          ВВозвращает:
+            Словарь(dict) c обновленной ценой  
     """
     url = "https://api-seller.ozon.ru/v1/product/import/stocks"
     headers = {
@@ -119,7 +107,7 @@ def download_stock():
     """Скачать файл ostatki с сайта casio
             
           Возвращает:
-            словарь с позициями и количеством остатков товара на сайте
+            Cловарь(dict) с позициями и количеством остатков товара на сайте
 
     """
     # Скачать остатки с сайта
@@ -145,11 +133,11 @@ def create_stocks(watch_remnants, offer_ids):
   """Создает словарь с остатками
   
           Арг:
-            watch_remnants - dict с количеством остатков на сайте
-            offer_ids - list Список из артикулов товаров
+            watch_remnants(dict) - Kоличество остатков на сайте
+            offer_ids(list) - Список из артикулов товаров
             
           Возвращает:
-            stocks - dict с артикулом(offer_id) товара и остатками(watch.get("Код"))
+            stocks(dict) - C артикулом(offer_id) товара и остатками(по артикулу)
 
           Пример: 
             {1223253: 25} 
@@ -175,11 +163,11 @@ def create_prices(watch_remnants, offer_ids):
     """Собирает цены товаров
   
           Арг:
-            watch_remnants - dict с количеством остатков на сайте
-            offer_ids - list Список из артикулов товаров
+            watch_remnants(dict) - Словарь с количеством остатков на сайте
+            offer_ids(list) -  Список из артикулов товаров
             
           Возвращает:
-            prices - dict с валютой (currency_code), артикулом(offer_id) и ценой товара (price)
+            prices(dict) - Словарь с валютой (currency_code), артикулом(offer_id) и ценой товара (price)
 
           Пример: 
            price = {
