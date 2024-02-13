@@ -19,10 +19,7 @@ def get_product_list(page, campaign_id, access_token):
             access_token - АПИ токен для доступа к АПИ сайта
 
         Возвращает:
-            Словарь в формате JSON товара
-
-        Пример: 
-            {}
+            JSON товара
     """
     endpoint_url = "https://api.partner.market.yandex.ru/"
     headers = {
@@ -46,14 +43,11 @@ def update_stocks(stocks, campaign_id, access_token):
     """Обновляет остатки
           Арг:
             stocks(list) - список из цен товаров
-            campaign_id - id магазина, переменная из окружения
-            access_token - АПИ токен для доступа к АПИ сайта
+            campaign_id(str) - id магазина, переменная из окружения
+            access_token(str) - АПИ токен для доступа к АПИ сайта
             
           Возвращает:
-            response.json() - dict c обновленными остатками
-
-          Пример: 
-            {} 
+            Словарь(dict) c обновленными остатками
     """
     
     endpoint_url = "https://api.partner.market.yandex.ru/"
@@ -74,15 +68,12 @@ def update_stocks(stocks, campaign_id, access_token):
 def update_price(prices, campaign_id, access_token):
     """Обновляет цены товаров
           Арг:
-            prices(list) - список из цен товаров
-            campaign_id - id магазина, переменная из окружения
-            access_token - АПИ токен для доступа к АПИ сайта
+            stocks(list) - список из цен товаров
+            campaign_id(str) - id магазина, переменная из окружения
+            access_token(str) - API токен для доступа к сайту
             
           Возвращает:
-            response.json() - dict c обновленной ценой
-
-          Пример: 
-            {}            
+            Словарь(dict) c обновленными остатками          
     """
     endpoint_url = "https://api.partner.market.yandex.ru/"
     headers = {
@@ -103,14 +94,11 @@ def get_offer_ids(campaign_id, market_token):
     """Получить артикулы товаров Яндекс маркета
 
         Арг: 
-            campaign_id - id магазина, переменная из окружения
-            access_token - АПИ токен для доступа к АПИ сайта
+            campaign_id(str) - id магазина, переменная из окружения
+            access_token(str) - API токен для доступа к сайту
 
         Возвращает:
-            list Список из артикулов товаров
-
-        Пример: 
-            {}
+            Список(list) из артикулов товаров
     """
     page = ""
     product_list = []
@@ -131,11 +119,11 @@ def create_stocks(watch_remnants, offer_ids, warehouse_id):
   """Создает словарь с остатками
   
           Арг:
-            watch_remnants - dict с количеством остатков на сайте
-            offer_ids - list Список из артикулов товаров
+            watch_remnants(dict) - количество остатков на сайте
+            offer_ids(list) - Список из артикулов товаров
             
           Возвращает:
-            stocks - dict с уникальный индетификатор товара (offer_id (string)) , идентификаторром склада(warehouse_id(int))
+            stocks(dict) - Уникальный индетификатор товара (offer_id (string)), идентификатор склада(warehouse_id(int))
 
           Пример: 
             {
@@ -197,8 +185,8 @@ def create_prices(watch_remnants, offer_ids):
     """Собирает цены товаров
   
           Арг:
-            watch_remnants - dict с количеством остатков на сайте
-            offer_ids - list Список из артикулов товаров
+            watch_remnants(dict) - Количество остатков на сайте
+            offer_ids(list) - Список из артикулов товаров
             
           Возвращает:
             prices - dict с валютой (currency_code), артикулом(offer_id) и ценой товара (price)
